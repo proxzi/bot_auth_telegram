@@ -7,12 +7,9 @@ from aiogram.dispatcher import FSMContext
 
 import asyncio
 import sqlite3
-import csv
 
 from BError import BError
-from config import TOKEN, CHAT_ID, LOG_CHAT
-
-admins = [453471931, 73553934, int(LOG_CHAT)]
+from config import TOKEN, CHAT_ID, LOG_CHAT, ADMINS
 
 storage = MemoryStorage()
 
@@ -37,7 +34,7 @@ class InviteStatesGroup(StatesGroup):
 from aiogram.dispatcher.filters import Text
 
 async def check_admins(id: int):
-    if id not in admins:
+    if id not in ADMINS:
         await bot.send_message(chat_id=id, text=f'Нет доступа к данной функции.')
         return False
     return True
