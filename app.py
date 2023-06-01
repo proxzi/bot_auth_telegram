@@ -21,7 +21,7 @@ db.row_factory = lambda cursor, row: row[0]
 
 status_member = ['creator', 'administrator', 'member']
 
-time_to_invite = 60 * 30 # время в секундах по умолчанию
+time_to_invite = 60 * 10 # время в секундах по умолчанию
 
 class ClientStatesGroup(StatesGroup):
     photo = State()
@@ -182,7 +182,7 @@ async def message_check(message: Message):
     await check_member_status(message)
     await bot.send_message(chat_id=message.from_user.id, text='Спасибо, ты подтвердил, что не являешься ботом. Твоя заявка на вступление будет одобрена модераторами в течении 30 минут.')
     await save_user_to_db(message)
-    await asyncio.sleep(10)
+    await asyncio.sleep(time_to_invite)
     await send_log(f'Пользователь c id: {message.from_user.id} и именем: {message.from_user.full_name} был аппрувнут и добавлен в канал ✅')
     try:
         await bot.approve_chat_join_request(CHAT_ID, message.from_user.id)
