@@ -299,10 +299,13 @@ async def count_users_sended_from_db() -> int:
         return 0
 
 async def delete_users_sended():
-    cursor = db.cursor()
-    cursor.execute('DELETE FROM user_sended;')
-    db.commit()
-    cursor.close()
+    try:
+        cursor = db.cursor()
+        cursor.execute('DELETE FROM user_sended;')
+        db.commit()
+        cursor.close()
+    except:
+        return
 
 async def get_users_who_didnt_get_a_message():
     cursor = db.cursor()
